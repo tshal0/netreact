@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPRS", "XPRS\XPRS.csproj", "{62F91554-6018-4620-88C5-216EC8780783}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPRS.Tests", "XPRS.Tests\XPRS.Tests.csproj", "{D4B4A688-4070-4C26-80C3-BC943FF208EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62F91554-6018-4620-88C5-216EC8780783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F91554-6018-4620-88C5-216EC8780783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F91554-6018-4620-88C5-216EC8780783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F91554-6018-4620-88C5-216EC8780783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B4A688-4070-4C26-80C3-BC943FF208EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B4A688-4070-4C26-80C3-BC943FF208EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B4A688-4070-4C26-80C3-BC943FF208EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B4A688-4070-4C26-80C3-BC943FF208EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6545460A-5BA2-4590-92C0-6E99AAEE2C63}
+	EndGlobalSection
+EndGlobal
