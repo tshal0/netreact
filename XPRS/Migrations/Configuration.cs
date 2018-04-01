@@ -31,7 +31,7 @@ namespace XPRS.Migrations
                 new Contractor { Name = "SAIC" },
                 new Contractor { Name = "Torch" },
                 new Contractor { Name = "Quantitech" },
-                new Contractor { Name = "PeopleTect" }
+                new Contractor { Name = "PeopleTec" }
             );
 
         }

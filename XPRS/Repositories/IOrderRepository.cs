@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web;
 
 using XPRS.Models;
 using XPRS.Models.Entities;
@@ -27,6 +29,7 @@ namespace XPRS.Repositories
 
         SerializedOrder UpdateOrder(SerializedOrder sord, int orderID);
         SerializedOrder UpdateOrCreatePlacements(List<SerializedContractor> scs, int orderID);
+        SerializedOrder UploadDocuments(List<HttpPostedFile> files, int orderID);
 
         // Delete
 

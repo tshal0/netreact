@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web;
 
 using XPRS.Models;
 using XPRS.Models.Entities;
@@ -26,6 +28,7 @@ namespace XPRS.Repositories
         // Update 
 
         SerializedContractor UpdateContractor(SerializedContractor sc, int ctrID);
+        //SerializedContractor UploadDocuments(List<HttpPostedFile> files, int ctrID);
 
         // Delete
 

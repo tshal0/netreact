@@ -5,7 +5,7 @@ using System.Web;
 using XPRS.Models.Serialized;
 using XPRS.Models;
 using XPRS.Models.Entities;
-
+using XPRS.Utilities;
 
 namespace XPRS.Repositories
 {
@@ -63,6 +63,26 @@ namespace XPRS.Repositories
                 placement.Contractor = ctr;
                 placement.Order = ord;
                 _db.Placements.Add(placement);
+            }
+
+            _db.SaveChanges();
+
+            return GetOrder(orderID);
+        }
+
+        public SerializedOrder UploadDocuments(List<HttpPostedFile> files, int orderID)
+        {
+            Order ord = _db.Orders.Where(o => o.OrderID == orderID).FirstOrDefault();
+
+            foreach (HttpPostedFile f in files)
+            {
+                Document doc = _db.Documents.Create();
+                
+                doc.OriginalFileName = f.FileName;
+                doc.UniqueFileName = System.IO.Path.GetRandomFileName();
+                FileUtility.SaveFile(f, doc.UniqueFileName);
+                _db.Documents.Add(doc);
+                ord.Documents.Add(doc);
             }
 
             _db.SaveChanges();
