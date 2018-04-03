@@ -27,7 +27,12 @@ namespace XPRS.Repositories
 
         public void DeleteOrder(int orderID)
         {
-            throw new NotImplementedException();
+            Order ord = _db.Orders.Where(o => o.OrderID == orderID).FirstOrDefault();
+            _db.Documents.RemoveRange(ord.Placements.SelectMany(p => p.Documents.ToList()));
+            _db.Documents.RemoveRange(ord.Documents);
+            _db.Placements.RemoveRange(ord.Placements);
+            _db.Orders.Remove(ord);
+            _db.SaveChanges();
         }
 
         public SerializedOrder GetOrder(int orderID)

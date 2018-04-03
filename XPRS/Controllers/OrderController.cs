@@ -56,8 +56,10 @@ namespace XPRS.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public List<SerializedOrder> Delete(int id)
         {
+            _repo.DeleteOrder(id);
+            return _repo.GetOrders();
         }
     }
 }

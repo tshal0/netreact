@@ -15,3 +15,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.close-image {
+    width:10px;
+    height:10px;
+    float:right;
+}

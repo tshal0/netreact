@@ -31283,7 +31283,9 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 var baseUrl = 'http://localhost:44291';
 
 var Dashboard = function Dashboard(_ref) {
-    var orders = _ref.orders;
+    var orders = _ref.orders,
+        getOrders = _ref.getOrders,
+        removeOrder = _ref.removeOrder;
     return _react2.default.createElement(
         _reactBootstrap.Grid,
         null,
@@ -31294,7 +31296,7 @@ var Dashboard = function Dashboard(_ref) {
             _react2.default.createElement(
                 _reactBootstrap.Col,
                 { xs: 8 },
-                _react2.default.createElement(OrderList, { orders: orders })
+                _react2.default.createElement(OrderList, { orders: orders, getOrders: getOrders, removeOrder: removeOrder })
             ),
             _react2.default.createElement(_reactBootstrap.Col, { xs: 2 })
         )
@@ -31323,21 +31325,70 @@ var MainNavBar = function MainNavBar(_ref2) {
     );
 };
 
-var OrderList = function OrderList(_ref3) {
-    var orders = _ref3.orders;
-    return _react2.default.createElement(
-        "div",
-        null,
-        orders.map(function (order, index) {
-            return _react2.default.createElement(OrderPanel, {
-                order: order,
-                key: index });
-        })
-    );
-};
+var OrderList = function (_React$Component) {
+    _inherits(OrderList, _React$Component);
 
-var Order = function Order(_ref4) {
-    var order = _ref4.order;
+    function OrderList(props, context) {
+        _classCallCheck(this, OrderList);
+
+        var _this = _possibleConstructorReturn(this, (OrderList.__proto__ || Object.getPrototypeOf(OrderList)).call(this, props, context));
+
+        console.log("OrderList CONSTRUCTOR");
+        console.log(props);
+        _this.state = {
+            orders: props.orders,
+            open: true
+        };
+        console.log(_this.state.orders);
+        _this.getOrders = props.getOrders.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(OrderList, [{
+        key: "getOrders",
+        value: function getOrders() {
+            console.log("OrderList");
+            this.props.getOrders();
+            this.forceUpdate();
+        }
+    }, {
+        key: "removeOrder",
+        value: function removeOrder(orderID) {
+            var _this2 = this;
+
+            _axios2.default.delete(baseUrl + "/api/order/" + orderID).then(function (response) {
+                _this2.setState({
+                    orders: response.data
+                });
+                _this2.forceUpdate();
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                this.state.orders.map(function (order, index) {
+                    return _react2.default.createElement(OrderPanel, {
+                        order: order,
+                        key: index,
+                        getOrders: _this3.getOrders,
+                        removeOrder: _this3.removeOrder
+                    });
+                })
+            );
+        }
+    }]);
+
+    return OrderList;
+}(_react2.default.Component);
+
+var Order = function Order(_ref3) {
+    var order = _ref3.order;
     return _react2.default.createElement(
         _reactBootstrap.Panel,
         { key: order.OrderID, bsStyle: "primary" },
@@ -31362,24 +31413,44 @@ var Order = function Order(_ref4) {
     );
 };
 
-var OrderPanel = function (_React$Component) {
-    _inherits(OrderPanel, _React$Component);
+var OrderPanel = function (_React$Component2) {
+    _inherits(OrderPanel, _React$Component2);
 
     function OrderPanel(props, context) {
         _classCallCheck(this, OrderPanel);
 
-        var _this = _possibleConstructorReturn(this, (OrderPanel.__proto__ || Object.getPrototypeOf(OrderPanel)).call(this, props, context));
+        var _this4 = _possibleConstructorReturn(this, (OrderPanel.__proto__ || Object.getPrototypeOf(OrderPanel)).call(this, props, context));
 
-        _this.state = {
+        _this4.state = {
             order: props.order,
             open: true
         };
-        return _this;
+
+        _this4.getOrders = props.getOrders.bind(_this4);
+        _this4.removeOrder = props.removeOrder.bind(_this4);
+        return _this4;
     }
 
     _createClass(OrderPanel, [{
+        key: "handleClose",
+        value: function handleClose() {}
+    }, {
+        key: "getOrders",
+        value: function getOrders() {
+            console.log("OrderPanel");
+            this.props.getOrders();
+        }
+    }, {
+        key: "removeOrder",
+        value: function removeOrder(orderID) {
+            this.props.removeOrder(orderID);
+            this.forceUpdate();
+        }
+    }, {
         key: "render",
         value: function render() {
+            var _this5 = this;
+
             return _react2.default.createElement(
                 _reactBootstrap.Panel,
                 { key: this.state.order.OrderID, bsStyle: "primary", defaultExpanded: true },
@@ -31389,7 +31460,10 @@ var OrderPanel = function (_React$Component) {
                     _react2.default.createElement(
                         _reactBootstrap.Panel.Title,
                         { toggle: true, componentClass: "h3" },
-                        this.state.order.ContractNumber
+                        this.state.order.ContractNumber,
+                        _react2.default.createElement(_reactBootstrap.Image, { src: "/Content/img/grey_close.png", onClick: function onClick() {
+                                return _this5.removeOrder(_this5.state.order.OrderID);
+                            }, style: { float: 'right' } })
                     )
                 ),
                 _react2.default.createElement(
@@ -31412,8 +31486,8 @@ var OrderPanel = function (_React$Component) {
     return OrderPanel;
 }(_react2.default.Component);
 
-var Placement = function Placement(_ref5) {
-    var placement = _ref5.placement;
+var Placement = function Placement(_ref4) {
+    var placement = _ref4.placement;
     return _react2.default.createElement(
         _reactBootstrap.Panel,
         { key: placement.ContractorID },
@@ -31433,6 +31507,26 @@ var App = _react2.default.createClass({
             //Orders: [{ "ContractNumber": "loading...", "Placements": [{ "ContractorID": "Loading...", "Contractor": {"Name": "Loading..."} }]}]
         };
     },
+    getOrders: function getOrders() {
+        var _this6 = this;
+
+        console.log("App");
+        _axios2.default.get(baseUrl + "/api/order").then(function (response) {
+            _this6.setState({
+                Orders: response.data
+            });
+        });
+    },
+    removeOrder: function removeOrder(orderID) {
+        var _this7 = this;
+
+        _axios2.default.delete(baseUrl + "/api/order/" + orderID).then(function (response) {
+            _this7.setState({
+                Orders: response.data
+            });
+            _this7.forceUpdate();
+        });
+    },
     render: function render() {
         console.log("render APP");
         if (this.state.Orders === undefined) {
@@ -31448,19 +31542,13 @@ var App = _react2.default.createClass({
                 "div",
                 null,
                 _react2.default.createElement(MainNavBar, null),
-                _react2.default.createElement(Dashboard, { orders: this.state.Orders })
+                _react2.default.createElement(Dashboard, { orders: this.state.Orders, getOrders: this.getOrders, removeOrder: this.removeOrder })
             );
         }
     },
     componentDidMount: function componentDidMount() {
-        var _this2 = this;
-
         console.log("API call");
-        _axios2.default.get(baseUrl + "/api/order").then(function (response) {
-            _this2.setState({
-                Orders: response.data
-            });
-        });
+        this.getOrders();
     }
 });
 

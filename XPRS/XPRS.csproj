@@ -295,6 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\" />
     <Folder Include="Uploaded\" />
   </ItemGroup>
   <ItemGroup>
