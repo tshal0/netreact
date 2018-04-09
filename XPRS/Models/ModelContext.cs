@@ -27,6 +27,12 @@ namespace XPRS.Models
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<Placement> Placements { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<CostReport> CostReports { get; set; }
+        public virtual DbSet<LineItem> LineItems { get; set; }
+        public virtual DbSet<SLIN> SLINs { get; set; }
+        public virtual DbSet<ContractorRate> ContractorRates { get; set; }
+        public virtual DbSet<ContractorPeriod> ContractorPeriods { get; set; }
+        public virtual DbSet<LaborCategory> LaborCategories { get; set; }
 
     }
 

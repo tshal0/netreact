@@ -57,6 +57,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -64,6 +67,7 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SimpleInjector, Version=4.1.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.1.0\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
@@ -175,13 +179,24 @@
     <Compile Include="Migrations\201803311941534_InitialCreate.Designer.cs">
       <DependentUpon>201803311941534_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804082337188_InitialCostReportModel.cs" />
+    <Compile Include="Migrations\201804082337188_InitialCostReportModel.Designer.cs">
+      <DependentUpon>201804082337188_InitialCostReportModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\Contractor.cs" />
+    <Compile Include="Models\Entities\ContractorPeriod.cs" />
+    <Compile Include="Models\Entities\ContractorRate.cs" />
+    <Compile Include="Models\Entities\CostReport.cs" />
     <Compile Include="Models\Entities\Document.cs" />
+    <Compile Include="Models\Entities\LaborCategory.cs" />
+    <Compile Include="Models\Entities\LineItem.cs" />
     <Compile Include="Models\Entities\Order.cs" />
     <Compile Include="Models\Entities\Placement.cs" />
+    <Compile Include="Models\Entities\SLIN.cs" />
     <Compile Include="Models\ModelContext.cs" />
     <Compile Include="Models\Serialized\SerializedContractor.cs" />
+    <Compile Include="Models\Serialized\SerializedCostReport.cs" />
     <Compile Include="Models\Serialized\SerializedDocument.cs" />
     <Compile Include="Models\Serialized\SerializedOrder.cs" />
     <Compile Include="Models\Serialized\SerializedPlacement.cs" />
@@ -312,6 +327,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803311941534_InitialCreate.resx">
       <DependentUpon>201803311941534_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804082337188_InitialCostReportModel.resx">
+      <DependentUpon>201804082337188_InitialCostReportModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

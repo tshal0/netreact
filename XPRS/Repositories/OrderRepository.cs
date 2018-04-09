@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Reflection;
+
+
 using XPRS.Models.Serialized;
 using XPRS.Models;
 using XPRS.Models.Entities;
 using XPRS.Utilities;
+
+using OfficeOpenXml;
 
 namespace XPRS.Repositories
 {
@@ -44,6 +49,7 @@ namespace XPRS.Repositories
         public List<SerializedOrder> GetOrders()
         {
             List<SerializedOrder> sords = _db.Orders.AsQueryable().Select(SerializedOrder.GenerationLambda).ToList();
+            CostReport cr = _db.CostReports.FirstOrDefault();
             return sords;
         }
 
@@ -93,6 +99,50 @@ namespace XPRS.Repositories
             _db.SaveChanges();
 
             return GetOrder(orderID);
+        }
+
+        public SerializedOrder UploadDocument(HttpPostedFile file, int orderID)
+        {
+
+
+            return GetOrder(orderID);
+        }
+
+        public void GenerateCostReport(int orderID)
+        {
+            SerializedCostReport scr = _db.CostReports.Where(o => o.OrderID == orderID).Select(SerializedCostReport.GenerationLambda).FirstOrDefault();
+            Order ord = _db.Orders.Where(o => o.OrderID == orderID).FirstOrDefault();
+            Document doc = _db.Documents.Create();
+
+            doc.OriginalFileName = "TestCostReport.xlsx";
+            doc.UniqueFileName = System.IO.Path.GetRandomFileName();
+
+
+            List<PropertyInfo> props = typeof(SerializedLineItem).GetProperties().ToList();
+
+            using (var p = new ExcelPackage())
+            {
+                var ws = p.Workbook.Worksheets.Add(scr.Contractor);
+
+                int row = 6, col = 1;
+                foreach (SerializedLineItem sli in scr.LineItems)
+                {
+                    foreach (PropertyInfo prop in props)
+                    {
+                        ws.Cells[row, col].Value = prop.GetValue(sli, null);
+                        col++;
+                    }
+                    row++;
+                    col = 1;
+                }
+                
+
+                FileUtility.SaveFile(p, doc.UniqueFileName);
+            }
+
+            _db.Documents.Add(doc);
+            ord.Documents.Add(doc);
+
         }
     }
 }

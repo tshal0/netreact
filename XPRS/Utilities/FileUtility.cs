@@ -16,7 +16,7 @@ using XPRS.Models;
 using XPRS.Models.Serialized;
 using XPRS.Models.Entities;
 using XPRS.Repositories;
-
+using OfficeOpenXml;
 
 namespace XPRS.Utilities
 {
@@ -27,13 +27,28 @@ namespace XPRS.Utilities
         public static void SaveFile(HttpPostedFile file, String uniqueFilename)
         {
             FileInfo fi = null;
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, UploadPath + uniqueFilename);
             try
             {
-                fi = new FileInfo(UploadPath + uniqueFilename);
+                fi = new FileInfo(path);
             } catch (Exception e) { }
             if (ReferenceEquals(fi, null)) { throw new Exception("Invalid Path"); }
             else if (fi.Exists) { throw new Exception("Filename already exists"); }
-            file.SaveAs(UploadPath + uniqueFilename);
+            file.SaveAs(path);
+        }
+
+        public static void SaveFile(ExcelPackage pkg, String uniqueFilename)
+        {
+            FileInfo fi = null;
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, UploadPath + uniqueFilename);
+            try
+            {
+                fi = new FileInfo(path);
+            }
+            catch (Exception e) { }
+            if (ReferenceEquals(fi, null)) { throw new Exception("Invalid Path"); }
+            else if (fi.Exists) { throw new Exception("Filename already exists"); }
+            pkg.SaveAs(fi);
         }
 
         public static HttpResponseMessage GetFile(String uniqueFilename, String originalFilename)

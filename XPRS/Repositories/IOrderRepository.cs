@@ -19,10 +19,10 @@ namespace XPRS.Repositories
 
         SerializedOrder GetOrder(int orderID);
         List<SerializedOrder> GetOrders();
-        
+
 
         // Create
-
+        void GenerateCostReport(int orderID);
         SerializedOrder CreateOrder(SerializedOrder sord);
         
         // Update 

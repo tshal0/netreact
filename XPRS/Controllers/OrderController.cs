@@ -32,6 +32,13 @@ namespace XPRS.Controllers
             return _repo.GetOrder(id);
         }
 
+        [Route("API/order/{id}/generatecostreport/")]
+        [HttpGet]
+        public void GenerateCostReport(int id)
+        {
+            _repo.GenerateCostReport(id);
+        }
+
         // POST api/<controller>
         public SerializedOrder Post([FromBody]SerializedOrder value)
         {
