@@ -1,12 +1,14 @@
 ﻿"use strict";
-
+var path = require('path');
 module.exports = {
-    entry: "./js/react/Order.js",
+    mode: 'development',
+    entry: "./js/entry.jsx",
     output: {
-        filename: "./js/react/bundle.js"
+        path: path.join(__dirname, './js/'),
+        filename: 'bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 loaders: [

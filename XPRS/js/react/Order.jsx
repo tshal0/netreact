@@ -1,8 +1,11 @@
 ﻿import React from "react";
+
 import ReactDOM from "react-dom";
-import rd3 from "react-d3";
 import Bootstrap, { Grid, Row, Col, Table, Panel, PanelHeading, PanelBody, Navbar, Nav, NavItem, NavDropdown, MenuItem, Button, Glyphicon, Image} from "react-bootstrap";
 import axios from "axios";
+import Dropzone from "react-dropzone";
+import createReactClass from "create-react-class";
+
 
 const baseUrl = 'http://localhost:44291';
 
@@ -155,7 +158,7 @@ const Placement = ({ placement }) => (
     </Panel>
 );
 
-const App = React.createClass({
+const App = createReactClass({
 
     getInitialState() {
         return {
@@ -183,13 +186,19 @@ const App = React.createClass({
             });
     },
 
+    onDrop(files) {
+        console.log(files);
+    },
+
     render() {
         console.log("render APP");
         if (this.state.Orders === undefined) {
             return (
                 <div>
                     <MainNavBar />
-                    Loading
+                    <Dropzone onDrop={(files) => this.onDrop(files)}>
+                        <div>Try dropping some files here, or click to select files to upload.</div>
+                    </Dropzone>
                 </div>
             );
         } else {
@@ -197,6 +206,9 @@ const App = React.createClass({
             return (
                 <div>
                     <MainNavBar/>
+                    <Dropzone onDrop={(files) => this.onDrop(files)}>
+                        <div>Try dropping some files here, or click to select files to upload.</div>
+                    </Dropzone>
                     <Dashboard orders={this.state.Orders} getOrders={this.getOrders} removeOrder={this.removeOrder} />
                 </div>
             );
@@ -210,5 +222,5 @@ const App = React.createClass({
 });
 
 
-
-ReactDOM.render(<App />, document.getElementById("app"));
+export default App;
+// ReactDOM.render(<App />, document.getElementById("app"))\\\\\\\\\\\\\\\\\

@@ -243,8 +243,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="js\react\bundle.js" />
-    <Content Include="js\react\Order.js" />
+    <Content Include="js\bundle.js" />
+    <Content Include="js\entry.jsx" />
+    <Content Include="js\react\base.jsx" />
+    <Content Include="js\react\Order.jsx" />
     <Content Include="Pages\index.html" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
